@@ -37,6 +37,7 @@ namespace Mtd.OrderMaker.Dbs
             catch (SqlException ex)
             {
                 logger.LogError(ex.Message);
+                
             }
 
 
