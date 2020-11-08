@@ -12,8 +12,8 @@ namespace Mtd.OrderMaker.Dbs.Migrations
                 columns: table => new
                 {
                     id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    name = table.Column<string>(type: "varchar(120)", nullable: false),
-                    description = table.Column<string>(type: "varchar(512)", nullable: false),
+                    name = table.Column<string>(type: "nvarchar(256)", nullable: false),
+                    description = table.Column<string>(type: "nvarchar(1024)", nullable: false),
                     parent = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
                 },
                 constraints: table =>
@@ -26,9 +26,9 @@ namespace Mtd.OrderMaker.Dbs.Migrations
                 columns: table => new
                 {
                     id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    name = table.Column<string>(type: "varchar(45)", nullable: false),
+                    name = table.Column<string>(type: "nvarchar(256)", nullable: false),
                     file_size = table.Column<long>(type: "bigint", nullable: false),
-                    file_type = table.Column<string>(type: "varchar(45)", nullable: false),
+                    file_type = table.Column<string>(type: "nvarchar(50)", nullable: false),
                     file_data = table.Column<byte[]>(type: "varbinary(max)", nullable: false)
                 },
                 constraints: table =>
@@ -41,7 +41,7 @@ namespace Mtd.OrderMaker.Dbs.Migrations
                 columns: table => new
                 {
                     id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    name = table.Column<string>(type: "varchar(45)", nullable: true),
+                    name = table.Column<string>(type: "nvarchar(256)", nullable: true),
                     value = table.Column<string>(type: "text", nullable: true)
                 },
                 constraints: table =>
@@ -50,26 +50,13 @@ namespace Mtd.OrderMaker.Dbs.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "mtd_group",
-                columns: table => new
-                {
-                    id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    name = table.Column<string>(type: "varchar(255)", nullable: false),
-                    description = table.Column<string>(type: "varchar(512)", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_mtd_group", x => x.id);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "mtd_sys_style",
                 columns: table => new
                 {
                     id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    name = table.Column<string>(type: "varchar(120)", nullable: false),
-                    description = table.Column<string>(type: "varchar(512)", nullable: false),
+                    name = table.Column<string>(type: "nvarchar(120)", nullable: false),
+                    description = table.Column<string>(type: "nvarchar(512)", nullable: false),
                     active = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
@@ -83,8 +70,8 @@ namespace Mtd.OrderMaker.Dbs.Migrations
                 {
                     id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    name = table.Column<string>(type: "varchar(45)", nullable: false),
-                    sign = table.Column<string>(type: "varchar(45)", nullable: false)
+                    name = table.Column<string>(type: "nvarchar(50)", nullable: false),
+                    sign = table.Column<string>(type: "nvarchar(50)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -97,8 +84,8 @@ namespace Mtd.OrderMaker.Dbs.Migrations
                 {
                     id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    name = table.Column<string>(type: "varchar(120)", nullable: false),
-                    description = table.Column<string>(type: "varchar(512)", nullable: false),
+                    name = table.Column<string>(type: "nvarchar(120)", nullable: false),
+                    description = table.Column<string>(type: "nvarchar(512)", nullable: false),
                     active = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
@@ -111,8 +98,8 @@ namespace Mtd.OrderMaker.Dbs.Migrations
                 columns: table => new
                 {
                     id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    name = table.Column<string>(type: "varchar(120)", nullable: false),
-                    description = table.Column<string>(type: "varchar(512)", nullable: false),
+                    name = table.Column<string>(type: "nvarchar(256)", nullable: false),
+                    description = table.Column<string>(type: "nvarchar(1024)", nullable: false),
                     active = table.Column<bool>(type: "bit", nullable: false),
                     mtd_category = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     sequence = table.Column<int>(type: "int", nullable: false, defaultValueSql: "'0'"),
@@ -131,35 +118,14 @@ namespace Mtd.OrderMaker.Dbs.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "mtd_approval",
-                columns: table => new
-                {
-                    id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    name = table.Column<string>(type: "varchar(120)", nullable: false),
-                    description = table.Column<string>(type: "varchar(512)", nullable: false),
-                    mtd_form = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_mtd_approval", x => x.id);
-                    table.ForeignKey(
-                        name: "fk_approvel_form",
-                        column: x => x.mtd_form,
-                        principalTable: "mtd_form",
-                        principalColumn: "id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "mtd_filter",
                 columns: table => new
                 {
                     id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    idUser = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     mtd_form = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     page_size = table.Column<int>(type: "int", nullable: false, defaultValueSql: "'10'"),
-                    searchText = table.Column<string>(type: "varchar(256)", nullable: false),
-                    searchNumber = table.Column<string>(type: "varchar(45)", nullable: false),
+                    searchText = table.Column<string>(type: "nvarchar(256)", nullable: false),
+                    searchNumber = table.Column<string>(type: "nvarchar(120)", nullable: false),
                     page = table.Column<int>(type: "int", nullable: false, defaultValueSql: "'1'"),
                     waitlist = table.Column<int>(type: "int", nullable: false, defaultValueSql: "'0'"),
                     show_number = table.Column<bool>(type: "bit", nullable: false),
@@ -182,10 +148,10 @@ namespace Mtd.OrderMaker.Dbs.Migrations
                 {
                     id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     image = table.Column<byte[]>(type: "image", nullable: false),
-                    image_type = table.Column<string>(type: "varchar(256)", nullable: false),
+                    image_type = table.Column<string>(type: "nvarchar(50)", nullable: false),
                     image_size = table.Column<int>(type: "int", nullable: false),
-                    color_font = table.Column<string>(type: "varchar(45)", nullable: false, defaultValueSql: "'white'"),
-                    color_back = table.Column<string>(type: "varchar(45)", nullable: false, defaultValueSql: "'gray'")
+                    color_font = table.Column<string>(type: "nvarchar(50)", nullable: false, defaultValueSql: "'white'"),
+                    color_back = table.Column<string>(type: "nvarchar(50)", nullable: false, defaultValueSql: "'gray'")
                 },
                 constraints: table =>
                 {
@@ -204,7 +170,7 @@ namespace Mtd.OrderMaker.Dbs.Migrations
                 {
                     id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     image = table.Column<byte[]>(type: "image", nullable: false),
-                    image_type = table.Column<string>(type: "varchar(256)", nullable: false),
+                    image_type = table.Column<string>(type: "nvarchar(50)", nullable: false),
                     image_size = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
@@ -223,8 +189,8 @@ namespace Mtd.OrderMaker.Dbs.Migrations
                 columns: table => new
                 {
                     id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    name = table.Column<string>(type: "varchar(120)", nullable: false),
-                    description = table.Column<string>(type: "varchar(512)", nullable: false),
+                    name = table.Column<string>(type: "nvarchar(256)", nullable: false),
+                    description = table.Column<string>(type: "nvarchar(1024)", nullable: false),
                     sequence = table.Column<int>(type: "int", nullable: false, defaultValueSql: "'0'"),
                     active = table.Column<bool>(type: "bit", nullable: false),
                     mtd_sys_style = table.Column<int>(type: "int", nullable: false),
@@ -278,29 +244,6 @@ namespace Mtd.OrderMaker.Dbs.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "mtd_approval_stage",
-                columns: table => new
-                {
-                    id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    name = table.Column<string>(type: "varchar(120)", nullable: false),
-                    description = table.Column<string>(type: "varchar(512)", nullable: false),
-                    mtd_approval = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    stage = table.Column<int>(type: "int", nullable: false),
-                    user_id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    block_parts = table.Column<string>(type: "text", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_mtd_approval_stage", x => x.id);
-                    table.ForeignKey(
-                        name: "fk_stage_approval",
-                        column: x => x.mtd_approval,
-                        principalTable: "mtd_approval",
-                        principalColumn: "id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "mtd_filter_date",
                 columns: table => new
                 {
@@ -320,34 +263,12 @@ namespace Mtd.OrderMaker.Dbs.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "mtd_filter_script",
-                columns: table => new
-                {
-                    id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    mtd_filter = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    name = table.Column<string>(type: "varchar(256)", nullable: false),
-                    description = table.Column<string>(type: "varchar(512)", nullable: false),
-                    script = table.Column<string>(type: "text", nullable: false),
-                    apply = table.Column<bool>(type: "bit", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_mtd_filter_script", x => x.id);
-                    table.ForeignKey(
-                        name: "fk_script_filter",
-                        column: x => x.mtd_filter,
-                        principalTable: "mtd_filter",
-                        principalColumn: "id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "mtd_form_part_field",
                 columns: table => new
                 {
                     id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    name = table.Column<string>(type: "varchar(120)", nullable: false),
-                    description = table.Column<string>(type: "varchar(512)", nullable: false),
+                    name = table.Column<string>(type: "nvarchar(256)", nullable: false),
+                    description = table.Column<string>(type: "nvarchar(1024)", nullable: false),
                     required = table.Column<bool>(type: "bit", nullable: false),
                     sequence = table.Column<int>(type: "int", nullable: false, defaultValueSql: "'0'"),
                     active = table.Column<bool>(type: "bit", nullable: false),
@@ -377,7 +298,7 @@ namespace Mtd.OrderMaker.Dbs.Migrations
                 {
                     id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     image = table.Column<byte[]>(type: "image", nullable: false),
-                    image_type = table.Column<string>(type: "varchar(256)", nullable: false),
+                    image_type = table.Column<string>(type: "nvarchar(50)", nullable: false),
                     image_size = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
@@ -389,101 +310,6 @@ namespace Mtd.OrderMaker.Dbs.Migrations
                         principalTable: "mtd_form_part",
                         principalColumn: "id",
                         onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "mtd_log_document",
-                columns: table => new
-                {
-                    id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    mtd_store = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    user_id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    user_name = table.Column<string>(type: "varchar(256)", nullable: false),
-                    timech = table.Column<DateTime>(type: "datetime", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_mtd_log_document", x => x.id);
-                    table.ForeignKey(
-                        name: "fk_log_document_store",
-                        column: x => x.mtd_store,
-                        principalTable: "mtd_store",
-                        principalColumn: "id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "mtd_store_owner",
-                columns: table => new
-                {
-                    id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    user_id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    user_name = table.Column<string>(type: "varchar(256)", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_mtd_store_owner", x => x.id);
-                    table.ForeignKey(
-                        name: "fk_owner_store",
-                        column: x => x.id,
-                        principalTable: "mtd_store",
-                        principalColumn: "id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "mtd_log_approval",
-                columns: table => new
-                {
-                    id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    mtd_store = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    stage = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    user_id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    result = table.Column<int>(type: "int", nullable: false),
-                    timecr = table.Column<DateTime>(type: "datetime", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_mtd_log_approval", x => x.id);
-                    table.ForeignKey(
-                        name: "fk_log_approval_store",
-                        column: x => x.mtd_store,
-                        principalTable: "mtd_store",
-                        principalColumn: "id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "fk_log_approval_stage",
-                        column: x => x.stage,
-                        principalTable: "mtd_approval_stage",
-                        principalColumn: "id");
-                });
-
-            migrationBuilder.CreateTable(
-                name: "mtd_store_approval",
-                columns: table => new
-                {
-                    id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    md_approve_stage = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    parts_approved = table.Column<string>(type: "text", nullable: false),
-                    complete = table.Column<bool>(type: "bit", nullable: false),
-                    result = table.Column<int>(type: "int", nullable: false, defaultValueSql: "'0'")
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_mtd_store_approval", x => x.id);
-                    table.ForeignKey(
-                        name: "fk_store_approve",
-                        column: x => x.id,
-                        principalTable: "mtd_store",
-                        principalColumn: "id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "fk_store_approve_stage",
-                        column: x => x.md_approve_stage,
-                        principalTable: "mtd_approval_stage",
-                        principalColumn: "id");
                 });
 
             migrationBuilder.CreateTable(
@@ -518,7 +344,7 @@ namespace Mtd.OrderMaker.Dbs.Migrations
                     id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     mtd_filter = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     mtd_form_part_field = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    value = table.Column<string>(type: "varchar(256)", nullable: false),
+                    value = table.Column<string>(type: "nvarchar(256)", nullable: false),
                     mtd_term = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
@@ -597,7 +423,7 @@ namespace Mtd.OrderMaker.Dbs.Migrations
                 {
                     id = table.Column<long>(type: "bigint", nullable: false),
                     mtd_store = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Register = table.Column<string>(type: "varchar(768)", nullable: false)
+                    Register = table.Column<string>(type: "nvarchar(1024)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -657,9 +483,9 @@ namespace Mtd.OrderMaker.Dbs.Migrations
                 {
                     id = table.Column<long>(type: "bigint", nullable: false),
                     register = table.Column<byte[]>(type: "varbinary(max)", nullable: false),
-                    file_name = table.Column<string>(type: "varchar(256)", nullable: false),
+                    file_name = table.Column<string>(type: "nvarchar(256)", nullable: false),
                     file_size = table.Column<int>(type: "int", nullable: false),
-                    file_type = table.Column<string>(type: "varchar(256)", nullable: false)
+                    file_type = table.Column<string>(type: "nvarchar(120)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -695,7 +521,7 @@ namespace Mtd.OrderMaker.Dbs.Migrations
                 columns: table => new
                 {
                     id = table.Column<long>(type: "bigint", nullable: false),
-                    register = table.Column<string>(type: "varchar(768)", nullable: false)
+                    register = table.Column<string>(type: "nvarchar(2048)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -707,33 +533,6 @@ namespace Mtd.OrderMaker.Dbs.Migrations
                         principalColumn: "id",
                         onDelete: ReferentialAction.Cascade);
                 });
-
-            migrationBuilder.CreateIndex(
-                name: "id_UNIQUE",
-                table: "mtd_approval",
-                column: "id",
-                unique: true);
-
-            migrationBuilder.CreateIndex(
-                name: "fk_approvel_form_idx",
-                table: "mtd_approval",
-                column: "mtd_form");
-
-            migrationBuilder.CreateIndex(
-                name: "id_UNIQUE",
-                table: "mtd_approval_stage",
-                column: "id",
-                unique: true);
-
-            migrationBuilder.CreateIndex(
-                name: "fk_stage_approval_idx",
-                table: "mtd_approval_stage",
-                column: "mtd_approval");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_USER",
-                table: "mtd_approval_stage",
-                column: "user_id");
 
             migrationBuilder.CreateIndex(
                 name: "id_UNIQUE",
@@ -768,11 +567,6 @@ namespace Mtd.OrderMaker.Dbs.Migrations
                 name: "mtd_filter_mtd_form_idx",
                 table: "mtd_filter",
                 column: "mtd_form");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_INDEX_USER",
-                table: "mtd_filter",
-                column: "idUser");
 
             migrationBuilder.CreateIndex(
                 name: "id_UNIQUE",
@@ -816,17 +610,6 @@ namespace Mtd.OrderMaker.Dbs.Migrations
                 name: "mtd_filter_field_term_idx",
                 table: "mtd_filter_field",
                 column: "mtd_term");
-
-            migrationBuilder.CreateIndex(
-                name: "id_UNIQUE",
-                table: "mtd_filter_script",
-                column: "id",
-                unique: true);
-
-            migrationBuilder.CreateIndex(
-                name: "fk_script_filter_idx",
-                table: "mtd_filter_script",
-                column: "mtd_filter");
 
             migrationBuilder.CreateIndex(
                 name: "id_UNIQUE",
@@ -902,44 +685,6 @@ namespace Mtd.OrderMaker.Dbs.Migrations
 
             migrationBuilder.CreateIndex(
                 name: "id_UNIQUE",
-                table: "mtd_group",
-                column: "id",
-                unique: true);
-
-            migrationBuilder.CreateIndex(
-                name: "id_UNIQUE",
-                table: "mtd_log_approval",
-                column: "id",
-                unique: true);
-
-            migrationBuilder.CreateIndex(
-                name: "fk_log_approval_store_idx",
-                table: "mtd_log_approval",
-                column: "mtd_store");
-
-            migrationBuilder.CreateIndex(
-                name: "fk_log_approval_stage_idx",
-                table: "mtd_log_approval",
-                column: "stage");
-
-            migrationBuilder.CreateIndex(
-                name: "id_UNIQUE",
-                table: "mtd_log_document",
-                column: "id",
-                unique: true);
-
-            migrationBuilder.CreateIndex(
-                name: "fk_log_document_store_idx",
-                table: "mtd_log_document",
-                column: "mtd_store");
-
-            migrationBuilder.CreateIndex(
-                name: "ix_date",
-                table: "mtd_log_document",
-                column: "timech");
-
-            migrationBuilder.CreateIndex(
-                name: "id_UNIQUE",
                 table: "mtd_store",
                 column: "id",
                 unique: true);
@@ -966,22 +711,6 @@ namespace Mtd.OrderMaker.Dbs.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_APPROVED",
-                table: "mtd_store_approval",
-                column: "complete");
-
-            migrationBuilder.CreateIndex(
-                name: "id_UNIQUE",
-                table: "mtd_store_approval",
-                column: "id",
-                unique: true);
-
-            migrationBuilder.CreateIndex(
-                name: "fk_store_approve_stage_idx",
-                table: "mtd_store_approval",
-                column: "md_approve_stage");
-
-            migrationBuilder.CreateIndex(
                 name: "id_UNIQUE",
                 table: "mtd_store_link",
                 column: "id",
@@ -997,17 +726,6 @@ namespace Mtd.OrderMaker.Dbs.Migrations
                 table: "mtd_store_link",
                 columns: new[] { "mtd_store", "id" },
                 unique: true);
-
-            migrationBuilder.CreateIndex(
-                name: "id_UNIQUE",
-                table: "mtd_store_owner",
-                column: "id",
-                unique: true);
-
-            migrationBuilder.CreateIndex(
-                name: "IX_USER",
-                table: "mtd_store_owner",
-                column: "user_id");
 
             migrationBuilder.CreateIndex(
                 name: "id_UNIQUE",
@@ -1118,9 +836,6 @@ namespace Mtd.OrderMaker.Dbs.Migrations
                 name: "mtd_filter_field");
 
             migrationBuilder.DropTable(
-                name: "mtd_filter_script");
-
-            migrationBuilder.DropTable(
                 name: "mtd_form_desk");
 
             migrationBuilder.DropTable(
@@ -1133,22 +848,7 @@ namespace Mtd.OrderMaker.Dbs.Migrations
                 name: "mtd_form_part_header");
 
             migrationBuilder.DropTable(
-                name: "mtd_group");
-
-            migrationBuilder.DropTable(
-                name: "mtd_log_approval");
-
-            migrationBuilder.DropTable(
-                name: "mtd_log_document");
-
-            migrationBuilder.DropTable(
-                name: "mtd_store_approval");
-
-            migrationBuilder.DropTable(
                 name: "mtd_store_link");
-
-            migrationBuilder.DropTable(
-                name: "mtd_store_owner");
 
             migrationBuilder.DropTable(
                 name: "mtd_store_stack_date");
@@ -1166,19 +866,13 @@ namespace Mtd.OrderMaker.Dbs.Migrations
                 name: "mtd_store_stack_text");
 
             migrationBuilder.DropTable(
-                name: "mtd_sys_term");
-
-            migrationBuilder.DropTable(
                 name: "mtd_filter");
 
             migrationBuilder.DropTable(
-                name: "mtd_approval_stage");
+                name: "mtd_sys_term");
 
             migrationBuilder.DropTable(
                 name: "mtd_store_stack");
-
-            migrationBuilder.DropTable(
-                name: "mtd_approval");
 
             migrationBuilder.DropTable(
                 name: "mtd_form_part_field");

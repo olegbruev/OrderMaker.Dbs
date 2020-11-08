@@ -26,8 +26,6 @@ namespace Mtd.OrderMaker.Dbs.Entity
     {
         public MtdStore()
         {
-            MtdLogDocument = new HashSet<MtdLogDocument>();
-            MtdLogApproval = new HashSet<MtdLogApproval>();
             MtdStoreLink = new HashSet<MtdStoreLink>();
             MtdStoreStack = new HashSet<MtdStoreStack>();
         }
@@ -40,10 +38,6 @@ namespace Mtd.OrderMaker.Dbs.Entity
 
         public virtual MtdForm MtdFormNavigation { get; set; }
         public virtual MtdStore ParentNavigation { get; set; }
-        public virtual MtdStoreApproval MtdStoreApproval { get; set; }      
-        public virtual MtdStoreOwner MtdStoreOwner { get; set; }
-        public virtual ICollection<MtdLogDocument> MtdLogDocument { get; set; }
-        public virtual ICollection<MtdLogApproval> MtdLogApproval { get; set; }
         public virtual ICollection<MtdStoreLink> MtdStoreLink { get; set; }
         public virtual ICollection<MtdStoreStack> MtdStoreStack { get; set; }
     }

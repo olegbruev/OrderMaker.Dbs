@@ -27,7 +27,6 @@ namespace Mtd.OrderMaker.Dbs.Entity
     {
         public MtdForm()
         {          
-            MtdApproval = new HashSet<MtdApproval>();
             MtdFilter = new HashSet<MtdFilter>();
             MtdFormList = new HashSet<MtdFormList>();
             MtdFormPart = new HashSet<MtdFormPart>();
@@ -46,7 +45,6 @@ namespace Mtd.OrderMaker.Dbs.Entity
         public virtual MtdCategoryForm MtdCategoryNavigation { get; set; }
         public virtual MtdFormDesk MtdFormDesk { get; set; }
         public virtual MtdFormHeader MtdFormHeader { get; set; }
-        public virtual ICollection<MtdApproval> MtdApproval { get; set; }
         public virtual ICollection<MtdFilter> MtdFilter { get; set; }
         public virtual ICollection<MtdFormList> MtdFormList { get; set; }
         public virtual ICollection<MtdFormPart> MtdFormPart { get; set; }

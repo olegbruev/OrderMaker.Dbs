@@ -1,18 +1,16 @@
 ﻿using Microsoft.EntityFrameworkCore.Migrations;
-using System;
 using System.IO;
 using System.Reflection;
-using System.Runtime.Versioning;
-using System.Text;
 
 namespace Mtd.OrderMaker.Dbs.Migrations
 {
-    public partial class RunScript : Migration
+    public partial class InitSqlScript : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+
             var assembly = Assembly.GetExecutingAssembly();
-            string resourceName = typeof(RunScript).Namespace + "._InitDatabase.sql";
+            string resourceName = typeof(InitSqlScript).Namespace + "._InitDatabase.sql";
             using Stream stream = assembly.GetManifestResourceStream(resourceName);
             using StreamReader reader = new StreamReader(stream);
             string sqlResult = reader.ReadToEnd();

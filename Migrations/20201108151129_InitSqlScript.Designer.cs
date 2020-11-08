@@ -10,98 +10,16 @@ using Mtd.OrderMaker.Dbs.Entity;
 namespace Mtd.OrderMaker.Dbs.Migrations
 {
     [DbContext(typeof(OrderMakerContext))]
-    [Migration("20201025105150_RunScript")]
-    partial class RunScript
+    [Migration("20201108151129_InitSqlScript")]
+    partial class InitSqlScript
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "3.1.7")
+                .HasAnnotation("ProductVersion", "3.1.9")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-            modelBuilder.Entity("Mtd.OrderMaker.Dbs.Entity.MtdApproval", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnName("id")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasColumnName("description")
-                        .HasColumnType("varchar(512)");
-
-                    b.Property<Guid>("MtdFormId")
-                        .HasColumnName("mtd_form")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnName("name")
-                        .HasColumnType("varchar(120)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("Id")
-                        .IsUnique()
-                        .HasName("id_UNIQUE");
-
-                    b.HasIndex("MtdFormId")
-                        .HasName("fk_approvel_form_idx");
-
-                    b.ToTable("mtd_approval");
-                });
-
-            modelBuilder.Entity("Mtd.OrderMaker.Dbs.Entity.MtdApprovalStage", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnName("id")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("BlockParts")
-                        .IsRequired()
-                        .HasColumnName("block_parts")
-                        .HasColumnType("text");
-
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasColumnName("description")
-                        .HasColumnType("varchar(512)");
-
-                    b.Property<Guid>("MtdApprovalId")
-                        .HasColumnName("mtd_approval")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnName("name")
-                        .HasColumnType("varchar(120)");
-
-                    b.Property<int>("Stage")
-                        .HasColumnName("stage")
-                        .HasColumnType("int");
-
-                    b.Property<Guid>("UserId")
-                        .HasColumnName("user_id")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("Id")
-                        .IsUnique()
-                        .HasName("id_UNIQUE");
-
-                    b.HasIndex("MtdApprovalId")
-                        .HasName("fk_stage_approval_idx");
-
-                    b.HasIndex("UserId")
-                        .HasName("IX_USER");
-
-                    b.ToTable("mtd_approval_stage");
-                });
 
             modelBuilder.Entity("Mtd.OrderMaker.Dbs.Entity.MtdCategoryForm", b =>
                 {
@@ -113,12 +31,12 @@ namespace Mtd.OrderMaker.Dbs.Migrations
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasColumnName("description")
-                        .HasColumnType("varchar(512)");
+                        .HasColumnType("nvarchar(1024)");
 
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnName("name")
-                        .HasColumnType("varchar(120)");
+                        .HasColumnType("nvarchar(256)");
 
                     b.Property<Guid>("ParentId")
                         .HasColumnName("parent")
@@ -155,12 +73,12 @@ namespace Mtd.OrderMaker.Dbs.Migrations
                     b.Property<string>("FileType")
                         .IsRequired()
                         .HasColumnName("file_type")
-                        .HasColumnType("varchar(45)");
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnName("name")
-                        .HasColumnType("varchar(45)");
+                        .HasColumnType("nvarchar(256)");
 
                     b.HasKey("Id");
 
@@ -180,7 +98,7 @@ namespace Mtd.OrderMaker.Dbs.Migrations
 
                     b.Property<string>("Name")
                         .HasColumnName("name")
-                        .HasColumnType("varchar(45)");
+                        .HasColumnType("nvarchar(256)");
 
                     b.Property<string>("Value")
                         .HasColumnName("value")
@@ -221,12 +139,12 @@ namespace Mtd.OrderMaker.Dbs.Migrations
                     b.Property<string>("SearchNumber")
                         .IsRequired()
                         .HasColumnName("searchNumber")
-                        .HasColumnType("varchar(45)");
+                        .HasColumnType("nvarchar(120)");
 
                     b.Property<string>("SearchText")
                         .IsRequired()
                         .HasColumnName("searchText")
-                        .HasColumnType("varchar(256)");
+                        .HasColumnType("nvarchar(256)");
 
                     b.Property<bool>("ShowDate")
                         .HasColumnName("show_date")
@@ -235,10 +153,6 @@ namespace Mtd.OrderMaker.Dbs.Migrations
                     b.Property<bool>("ShowNumber")
                         .HasColumnName("show_number")
                         .HasColumnType("bit");
-
-                    b.Property<Guid>("UserId")
-                        .HasColumnName("idUser")
-                        .HasColumnType("uniqueidentifier");
 
                     b.Property<int>("WaitList")
                         .ValueGeneratedOnAdd()
@@ -254,9 +168,6 @@ namespace Mtd.OrderMaker.Dbs.Migrations
 
                     b.HasIndex("MtdFormId")
                         .HasName("mtd_filter_mtd_form_idx");
-
-                    b.HasIndex("UserId")
-                        .HasName("IX_INDEX_USER");
 
                     b.ToTable("mtd_filter");
                 });
@@ -342,7 +253,7 @@ namespace Mtd.OrderMaker.Dbs.Migrations
                     b.Property<string>("Value")
                         .IsRequired()
                         .HasColumnName("value")
-                        .HasColumnType("varchar(256)");
+                        .HasColumnType("nvarchar(256)");
 
                     b.HasKey("Id");
 
@@ -362,48 +273,6 @@ namespace Mtd.OrderMaker.Dbs.Migrations
                     b.ToTable("mtd_filter_field");
                 });
 
-            modelBuilder.Entity("Mtd.OrderMaker.Dbs.Entity.MtdFilterScript", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnName("id")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<bool>("Apply")
-                        .HasColumnName("apply")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasColumnName("description")
-                        .HasColumnType("varchar(512)");
-
-                    b.Property<Guid>("MtdFilterId")
-                        .HasColumnName("mtd_filter")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnName("name")
-                        .HasColumnType("varchar(256)");
-
-                    b.Property<string>("Script")
-                        .IsRequired()
-                        .HasColumnName("script")
-                        .HasColumnType("text");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("Id")
-                        .IsUnique()
-                        .HasName("id_UNIQUE");
-
-                    b.HasIndex("MtdFilterId")
-                        .HasName("fk_script_filter_idx");
-
-                    b.ToTable("mtd_filter_script");
-                });
-
             modelBuilder.Entity("Mtd.OrderMaker.Dbs.Entity.MtdForm", b =>
                 {
                     b.Property<Guid>("Id")
@@ -418,7 +287,7 @@ namespace Mtd.OrderMaker.Dbs.Migrations
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasColumnName("description")
-                        .HasColumnType("varchar(512)");
+                        .HasColumnType("nvarchar(1024)");
 
                     b.Property<Guid>("MtdCategoryId")
                         .HasColumnName("mtd_category")
@@ -427,7 +296,7 @@ namespace Mtd.OrderMaker.Dbs.Migrations
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnName("name")
-                        .HasColumnType("varchar(120)");
+                        .HasColumnType("nvarchar(256)");
 
                     b.Property<int>("Sequence")
                         .ValueGeneratedOnAdd()
@@ -465,14 +334,14 @@ namespace Mtd.OrderMaker.Dbs.Migrations
                         .IsRequired()
                         .ValueGeneratedOnAdd()
                         .HasColumnName("color_back")
-                        .HasColumnType("varchar(45)")
+                        .HasColumnType("nvarchar(50)")
                         .HasDefaultValueSql("'gray'");
 
                     b.Property<string>("ColorFont")
                         .IsRequired()
                         .ValueGeneratedOnAdd()
                         .HasColumnName("color_font")
-                        .HasColumnType("varchar(45)")
+                        .HasColumnType("nvarchar(50)")
                         .HasDefaultValueSql("'white'");
 
                     b.Property<byte[]>("Image")
@@ -487,7 +356,7 @@ namespace Mtd.OrderMaker.Dbs.Migrations
                     b.Property<string>("ImageType")
                         .IsRequired()
                         .HasColumnName("image_type")
-                        .HasColumnType("varchar(256)");
+                        .HasColumnType("nvarchar(50)");
 
                     b.HasKey("Id");
 
@@ -516,7 +385,7 @@ namespace Mtd.OrderMaker.Dbs.Migrations
                     b.Property<string>("ImageType")
                         .IsRequired()
                         .HasColumnName("image_type")
-                        .HasColumnType("varchar(256)");
+                        .HasColumnType("nvarchar(50)");
 
                     b.HasKey("Id");
 
@@ -567,7 +436,7 @@ namespace Mtd.OrderMaker.Dbs.Migrations
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasColumnName("description")
-                        .HasColumnType("varchar(512)");
+                        .HasColumnType("nvarchar(1024)");
 
                     b.Property<Guid>("MtdFormId")
                         .HasColumnName("mtd_form")
@@ -580,7 +449,7 @@ namespace Mtd.OrderMaker.Dbs.Migrations
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnName("name")
-                        .HasColumnType("varchar(120)");
+                        .HasColumnType("nvarchar(256)");
 
                     b.Property<int>("Sequence")
                         .ValueGeneratedOnAdd()
@@ -621,7 +490,7 @@ namespace Mtd.OrderMaker.Dbs.Migrations
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasColumnName("description")
-                        .HasColumnType("varchar(512)");
+                        .HasColumnType("nvarchar(1024)");
 
                     b.Property<Guid>("MtdFormPartId")
                         .HasColumnName("mtd_form_part")
@@ -634,7 +503,7 @@ namespace Mtd.OrderMaker.Dbs.Migrations
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnName("name")
-                        .HasColumnType("varchar(120)");
+                        .HasColumnType("nvarchar(256)");
 
                     b.Property<bool>("Required")
                         .HasColumnName("required")
@@ -679,7 +548,7 @@ namespace Mtd.OrderMaker.Dbs.Migrations
                     b.Property<string>("ImageType")
                         .IsRequired()
                         .HasColumnName("image_type")
-                        .HasColumnType("varchar(256)");
+                        .HasColumnType("nvarchar(50)");
 
                     b.HasKey("Id");
 
@@ -688,115 +557,6 @@ namespace Mtd.OrderMaker.Dbs.Migrations
                         .HasName("id_UNIQUE");
 
                     b.ToTable("mtd_form_part_header");
-                });
-
-            modelBuilder.Entity("Mtd.OrderMaker.Dbs.Entity.MtdGroup", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnName("id")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasColumnName("description")
-                        .HasColumnType("varchar(512)");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnName("name")
-                        .HasColumnType("varchar(255)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("Id")
-                        .IsUnique()
-                        .HasName("id_UNIQUE");
-
-                    b.ToTable("mtd_group");
-                });
-
-            modelBuilder.Entity("Mtd.OrderMaker.Dbs.Entity.MtdLogApproval", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnName("id")
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<Guid>("MtdStoreId")
-                        .HasColumnName("mtd_store")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<int>("Result")
-                        .HasColumnName("result")
-                        .HasColumnType("int");
-
-                    b.Property<Guid>("StageId")
-                        .HasColumnName("stage")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<DateTime>("Timecr")
-                        .HasColumnName("timecr")
-                        .HasColumnType("datetime");
-
-                    b.Property<Guid>("UserId")
-                        .HasColumnName("user_id")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("Id")
-                        .IsUnique()
-                        .HasName("id_UNIQUE");
-
-                    b.HasIndex("MtdStoreId")
-                        .HasName("fk_log_approval_store_idx");
-
-                    b.HasIndex("StageId")
-                        .HasName("fk_log_approval_stage_idx");
-
-                    b.ToTable("mtd_log_approval");
-                });
-
-            modelBuilder.Entity("Mtd.OrderMaker.Dbs.Entity.MtdLogDocument", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnName("id")
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<Guid>("MtdStoreId")
-                        .HasColumnName("mtd_store")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<DateTime>("TimeCh")
-                        .HasColumnName("timech")
-                        .HasColumnType("datetime");
-
-                    b.Property<Guid>("UserId")
-                        .HasColumnName("user_id")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("UserName")
-                        .IsRequired()
-                        .HasColumnName("user_name")
-                        .HasColumnType("varchar(256)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("Id")
-                        .IsUnique()
-                        .HasName("id_UNIQUE");
-
-                    b.HasIndex("MtdStoreId")
-                        .HasName("fk_log_document_store_idx");
-
-                    b.HasIndex("TimeCh")
-                        .HasName("ix_date");
-
-                    b.ToTable("mtd_log_document");
                 });
 
             modelBuilder.Entity("Mtd.OrderMaker.Dbs.Entity.MtdStore", b =>
@@ -848,46 +608,6 @@ namespace Mtd.OrderMaker.Dbs.Migrations
                     b.ToTable("mtd_store");
                 });
 
-            modelBuilder.Entity("Mtd.OrderMaker.Dbs.Entity.MtdStoreApproval", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .HasColumnName("id")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<bool>("Complete")
-                        .HasColumnName("complete")
-                        .HasColumnType("bit");
-
-                    b.Property<Guid>("MtdApproveStageId")
-                        .HasColumnName("md_approve_stage")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("PartsApproved")
-                        .IsRequired()
-                        .HasColumnName("parts_approved")
-                        .HasColumnType("text");
-
-                    b.Property<int>("Result")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnName("result")
-                        .HasColumnType("int")
-                        .HasDefaultValueSql("'0'");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("Complete")
-                        .HasName("IX_APPROVED");
-
-                    b.HasIndex("Id")
-                        .IsUnique()
-                        .HasName("id_UNIQUE");
-
-                    b.HasIndex("MtdApproveStageId")
-                        .HasName("fk_store_approve_stage_idx");
-
-                    b.ToTable("mtd_store_approval");
-                });
-
             modelBuilder.Entity("Mtd.OrderMaker.Dbs.Entity.MtdStoreLink", b =>
                 {
                     b.Property<long>("Id")
@@ -900,7 +620,7 @@ namespace Mtd.OrderMaker.Dbs.Migrations
 
                     b.Property<string>("Register")
                         .IsRequired()
-                        .HasColumnType("varchar(768)");
+                        .HasColumnType("nvarchar(1024)");
 
                     b.HasKey("Id");
 
@@ -916,33 +636,6 @@ namespace Mtd.OrderMaker.Dbs.Migrations
                         .HasName("ix_unique");
 
                     b.ToTable("mtd_store_link");
-                });
-
-            modelBuilder.Entity("Mtd.OrderMaker.Dbs.Entity.MtdStoreOwner", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .HasColumnName("id")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("UserId")
-                        .HasColumnName("user_id")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("UserName")
-                        .IsRequired()
-                        .HasColumnName("user_name")
-                        .HasColumnType("varchar(256)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("Id")
-                        .IsUnique()
-                        .HasName("id_UNIQUE");
-
-                    b.HasIndex("UserId")
-                        .HasName("IX_USER");
-
-                    b.ToTable("mtd_store_owner");
                 });
 
             modelBuilder.Entity("Mtd.OrderMaker.Dbs.Entity.MtdStoreStack", b =>
@@ -1033,7 +726,7 @@ namespace Mtd.OrderMaker.Dbs.Migrations
                     b.Property<string>("FileName")
                         .IsRequired()
                         .HasColumnName("file_name")
-                        .HasColumnType("varchar(256)");
+                        .HasColumnType("nvarchar(256)");
 
                     b.Property<int>("FileSize")
                         .HasColumnName("file_size")
@@ -1042,7 +735,7 @@ namespace Mtd.OrderMaker.Dbs.Migrations
                     b.Property<string>("FileType")
                         .IsRequired()
                         .HasColumnName("file_type")
-                        .HasColumnType("varchar(256)");
+                        .HasColumnType("nvarchar(120)");
 
                     b.Property<byte[]>("Register")
                         .IsRequired()
@@ -1089,7 +782,7 @@ namespace Mtd.OrderMaker.Dbs.Migrations
                     b.Property<string>("Register")
                         .IsRequired()
                         .HasColumnName("register")
-                        .HasColumnType("varchar(768)");
+                        .HasColumnType("nvarchar(2048)");
 
                     b.HasKey("Id");
 
@@ -1118,12 +811,12 @@ namespace Mtd.OrderMaker.Dbs.Migrations
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasColumnName("description")
-                        .HasColumnType("varchar(512)");
+                        .HasColumnType("nvarchar(512)");
 
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnName("name")
-                        .HasColumnType("varchar(120)");
+                        .HasColumnType("nvarchar(120)");
 
                     b.HasKey("Id");
 
@@ -1145,12 +838,12 @@ namespace Mtd.OrderMaker.Dbs.Migrations
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnName("name")
-                        .HasColumnType("varchar(45)");
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<string>("Sign")
                         .IsRequired()
                         .HasColumnName("sign")
-                        .HasColumnType("varchar(45)");
+                        .HasColumnType("nvarchar(50)");
 
                     b.HasKey("Id");
 
@@ -1176,12 +869,12 @@ namespace Mtd.OrderMaker.Dbs.Migrations
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasColumnName("description")
-                        .HasColumnType("varchar(512)");
+                        .HasColumnType("nvarchar(512)");
 
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnName("name")
-                        .HasColumnType("varchar(120)");
+                        .HasColumnType("nvarchar(120)");
 
                     b.HasKey("Id");
 
@@ -1190,26 +883,6 @@ namespace Mtd.OrderMaker.Dbs.Migrations
                         .HasName("id_UNIQUE");
 
                     b.ToTable("mtd_sys_type");
-                });
-
-            modelBuilder.Entity("Mtd.OrderMaker.Dbs.Entity.MtdApproval", b =>
-                {
-                    b.HasOne("Mtd.OrderMaker.Dbs.Entity.MtdForm", "MtdFormNavigation")
-                        .WithMany("MtdApproval")
-                        .HasForeignKey("MtdFormId")
-                        .HasConstraintName("fk_approvel_form")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("Mtd.OrderMaker.Dbs.Entity.MtdApprovalStage", b =>
-                {
-                    b.HasOne("Mtd.OrderMaker.Dbs.Entity.MtdApproval", "MtdApprovalNavigation")
-                        .WithMany("MtdApprovalStage")
-                        .HasForeignKey("MtdApprovalId")
-                        .HasConstraintName("fk_stage_approval")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
                 });
 
             modelBuilder.Entity("Mtd.OrderMaker.Dbs.Entity.MtdFilter", b =>
@@ -1269,16 +942,6 @@ namespace Mtd.OrderMaker.Dbs.Migrations
                         .WithMany("MtdFilterField")
                         .HasForeignKey("MtdTerm")
                         .HasConstraintName("mtd_filter_field_mtd_term")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("Mtd.OrderMaker.Dbs.Entity.MtdFilterScript", b =>
-                {
-                    b.HasOne("Mtd.OrderMaker.Dbs.Entity.MtdFilter", "MtdFilterNavigation")
-                        .WithMany("MtdFilterScript")
-                        .HasForeignKey("MtdFilterId")
-                        .HasConstraintName("fk_script_filter")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
@@ -1374,33 +1037,6 @@ namespace Mtd.OrderMaker.Dbs.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Mtd.OrderMaker.Dbs.Entity.MtdLogApproval", b =>
-                {
-                    b.HasOne("Mtd.OrderMaker.Dbs.Entity.MtdStore", "MtdStoreNavigation")
-                        .WithMany("MtdLogApproval")
-                        .HasForeignKey("MtdStoreId")
-                        .HasConstraintName("fk_log_approval_store")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Mtd.OrderMaker.Dbs.Entity.MtdApprovalStage", "StageNavigation")
-                        .WithMany("MtdLogApproval")
-                        .HasForeignKey("StageId")
-                        .HasConstraintName("fk_log_approval_stage")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("Mtd.OrderMaker.Dbs.Entity.MtdLogDocument", b =>
-                {
-                    b.HasOne("Mtd.OrderMaker.Dbs.Entity.MtdStore", "MtdStoreNavigation")
-                        .WithMany("MtdLogDocument")
-                        .HasForeignKey("MtdStoreId")
-                        .HasConstraintName("fk_log_document_store")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
             modelBuilder.Entity("Mtd.OrderMaker.Dbs.Entity.MtdStore", b =>
                 {
                     b.HasOne("Mtd.OrderMaker.Dbs.Entity.MtdForm", "MtdFormNavigation")
@@ -1413,23 +1049,6 @@ namespace Mtd.OrderMaker.Dbs.Migrations
                     b.HasOne("Mtd.OrderMaker.Dbs.Entity.MtdStore", "ParentNavigation")
                         .WithMany()
                         .HasForeignKey("ParentNavigationId");
-                });
-
-            modelBuilder.Entity("Mtd.OrderMaker.Dbs.Entity.MtdStoreApproval", b =>
-                {
-                    b.HasOne("Mtd.OrderMaker.Dbs.Entity.MtdStore", "IdNavigation")
-                        .WithOne("MtdStoreApproval")
-                        .HasForeignKey("Mtd.OrderMaker.Dbs.Entity.MtdStoreApproval", "Id")
-                        .HasConstraintName("fk_store_approve")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Mtd.OrderMaker.Dbs.Entity.MtdApprovalStage", "MdApproveStageNavigation")
-                        .WithMany("MtdStoreApproval")
-                        .HasForeignKey("MtdApproveStageId")
-                        .HasConstraintName("fk_store_approve_stage")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
                 });
 
             modelBuilder.Entity("Mtd.OrderMaker.Dbs.Entity.MtdStoreLink", b =>
@@ -1446,16 +1065,6 @@ namespace Mtd.OrderMaker.Dbs.Migrations
                         .HasForeignKey("MtdStoreId")
                         .HasConstraintName("fk_mtd_store_link_mtd_store1")
                         .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("Mtd.OrderMaker.Dbs.Entity.MtdStoreOwner", b =>
-                {
-                    b.HasOne("Mtd.OrderMaker.Dbs.Entity.MtdStore", "IdNavigation")
-                        .WithOne("MtdStoreOwner")
-                        .HasForeignKey("Mtd.OrderMaker.Dbs.Entity.MtdStoreOwner", "Id")
-                        .HasConstraintName("fk_owner_store")
-                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
